@@ -1,51 +1,3 @@
-const mongoose = require("mongoose");
-require("dotenv").config();
-const express = require("express");
-
-const { customAlphabet } = require("nanoid");
-const geoip = require("geoip-lite");
-const fs = require("fs");
-const path = require("path");
-
-const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-const cors = require("cors");
-app.use(cors(
-  origin="*"
-));
-
-const logStream = fs.createWriteStream(path.join(__dirname, "logs.txt"), { flags: "a" });
-app.use((req, res, next) => {
-  const log = `[${new Date().toISOString()}] ${req.method} ${req.originalUrl} from ${req.ip}\n`;
-  logStream.write(log);
-  next();
-});
-
-
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => console.log("MongoDB connected")).catch(err => console.error("MongoDB error", err));
-
-
-const clickSchema = new mongoose.Schema({
-  timestamp: { type: Date, default: Date.now },
-  referrer: String,
-  location: String,
-});
-
-const urlSchema = new mongoose.Schema({
-  originalUrl: String,
-  shortCode: { type: String, unique: true },
-  createdAt: { type: Date, default: Date.now },
-  expiry: Date,
-  clicks: [clickSchema],
-});
-
-const Url = mongoose.model("Url", urlSchema);
-
-
 app.post("/shorturls", async (req, res) => {
   try {
     const { url, validity = 30, shortcode } = req.body;
@@ -116,6 +68,3 @@ app.get("/shorturls/:code", async (req, res) => {
     res.status(500).json({ error: "Error fetching stats" });
   }
 });
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

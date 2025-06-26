@@ -7,10 +7,10 @@ const clickSchema = new mongoose.Schema({
 });
 
 const urlSchema = new mongoose.Schema({
-  originalUrl: { type: String, required: true },
+  originalUrl: String,
   shortCode: { type: String, unique: true },
-  expiry: { type: Date },
   createdAt: { type: Date, default: Date.now },
+  expiry: Date,
   clicks: [clickSchema],
 });
 
