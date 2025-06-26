@@ -10,4 +10,5 @@ A full-stack project built during a campus hiring evaluation. This application a
 
 
 ![Screenshot 2025-06-26 190550](https://github.com/user-attachments/assets/5a66543f-e732-4255-934c-7ca43136419c)
-![Screenshot 2025-06-26 190550](https://github.com/user-attachments/assets/5a66543f-e732-4255-934c-7ca43136419c)
+![Screenshot 2025-06-26 190600](https://github.com/user-attachments/assets/8f97dfe8-5d20-466c-9d7f-7d66747fb3a7)
+
